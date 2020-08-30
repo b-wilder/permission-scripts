@@ -14,13 +14,21 @@ const flsXml = `    <fieldPermissions>
         <field>{1}</field>
         <readable>true</readable>
     </fieldPermissions>`;
+const sfdxProjectJson = JSON.parse(fs.readFileSync('./sfdx-project.json'));
 let combinedFlsXml = '';
 const readOnlyTypes = new Set(['AutoNumber', 'ExternalLookup', 'IndirectLookup', 'Summary', 'File']);
 const formulaElement = 'formula';
 //
-let dirPath = `./force-app/main/default/objects/${sObjectApiName}/fields`;
+let defaultPkg = '';
+sfdxProjectJson.packageDirectories.forEach(package => {
+    if (package.default === true) {
+        defaultPkg = package.path;
+    }
+});
+let dirPath = `./${defaultPkg}/main/default/objects/${sObjectApiName}/fields`;
 const dir = fs.opendirSync(dirPath);
 let dirent;
+//
 while ((dirent = dir.readSync()) !== null) {
     let filePath = `${dirPath}/${dirent.name}`;
     let contents = fs.readFileSync(filePath).toString();
