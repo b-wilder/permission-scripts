@@ -16,7 +16,7 @@ const flsXml = `    <fieldPermissions>
     </fieldPermissions>`;
 const sfdxProjectJson = JSON.parse(fs.readFileSync('./sfdx-project.json'));
 let combinedFlsXml = '';
-const readOnlyTypes = new Set(['AutoNumber', 'ExternalLookup', 'IndirectLookup', 'Summary', 'File']);
+const readOnlyTypes = new Set(['AutoNumber', 'ExternalLookup', 'IndirectLookup', 'Summary', 'File', 'MasterDetail']);
 const formulaElement = 'formula';
 //
 let defaultPkg = '';
